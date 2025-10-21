@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Candidate } from '../candidates/candidate.schema';
-import { User } from '../user/user.schema';
+import { Candidate } from '../../candidates/schemas/candidate.schema';
+import { User } from '../../user/schemas/user.schema';
 
 export type VoteDocument = Vote & Document;
 

@@ -9,7 +9,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { CandidatesService } from './candidates.service';
-import { Candidate } from './candidate.schema';
+import { Candidate } from './schemas/candidate.schema';
 import { Request } from 'express';
 
 // Type-safe request for roles

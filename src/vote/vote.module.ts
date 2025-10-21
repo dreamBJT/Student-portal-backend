@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Vote, VoteSchema } from './vote.schema';
+import { Vote, VoteSchema } from './schemas/vote.schema';
 import { VotesService } from './vote.service';
 import { VotesController } from './vote.controller';
 import { CandidatesModule } from '../candidates/candidates.module';

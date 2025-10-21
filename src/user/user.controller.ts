@@ -6,52 +6,59 @@ import {
   Post,
   Put,
   Delete,
-  Req,
+  UseGuards,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { User } from './user.schema';
-import { Request } from 'express';
-
-// Define a type-safe request interface
-interface AuthenticatedRequest extends Request {
-  user?: {
-    role: 'students' | 'admin' | 'superAdmin';
-    [key: string]: any; // other user info like id, email
-  };
-}
+import { UsersService } from './user.service';
+import { User } from './schemas/user.schema';
+import { UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UsersService) {}
 
-  @Post()
-  create(@Body() userData: Partial<User>, @Req() req: AuthenticatedRequest) {
-    const currentUserRole = req.user?.role ?? 'students';
-    return this.userService.create(userData, currentUserRole);
+  // Create user by superAdmin (protected with JWT and role check)
+  @Post('create-by-superadmin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async createBySuperAdmin(@Body() newUserData: Partial<User>) {
+    // Ensure new user is admin, student, or superAdmin
+    if (!['admin', 'students', 'superAdmin'].includes(newUserData.role || 'students')) {
+      throw new UnauthorizedException('SuperAdmin can only create admin, students, or superAdmin');
+    }
+
+    return this.userService.createUser(newUserData);
   }
 
+  // Create sample users with different roles
+  @Post('seed')
+  async seedUsers() {
+    console.log('Seed endpoint called');
+    return this.userService.createSampleUsers();
+  }
+
+  // Get all users
   @Get()
-  findAll() {
+  async findAll() {
     return this.userService.findAll();
   }
 
+  // Get user by ID
   @Get(':id')
-  findById(@Param('id') id: string) {
+  async findById(@Param('id') id: string) {
     return this.userService.findById(id);
   }
 
+  // Update user info
   @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateData: Partial<User>,
-    @Req() req: AuthenticatedRequest,
-  ) {
-    const currentUserRole = req.user?.role ?? 'students';
-    return this.userService.update(id, updateData, currentUserRole);
+  async update(@Param('id') id: string, @Body() updateData: Partial<User>) {
+    return this.userService.update(id, updateData);
   }
 
+  // Delete user
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  async delete(@Param('id') id: string) {
     return this.userService.delete(id);
   }
 }

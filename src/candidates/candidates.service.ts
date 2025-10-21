@@ -1,7 +1,7 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Candidate, CandidateDocument } from './candidate.schema';
+import { Candidate, CandidateDocument } from './schemas/candidate.schema';
 
 @Injectable()
 export class CandidatesService {
