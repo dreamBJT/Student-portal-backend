@@ -40,9 +40,11 @@ export class AuthService {
       case 'admin':
         return '/admin/dashboard';
       case 'superAdmin':
-        return '/super-admin/panel';
+        return '/superAdmin';
+      case 'student':
+        return '/student/dashboard';
       default:
-        return '/student/home';
+        return '/';
     }
   }
 }
