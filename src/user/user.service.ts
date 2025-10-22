@@ -39,46 +39,4 @@ export class UsersService {
   async delete(id: string): Promise<UserDocument | null> {
     return this.userModel.findByIdAndDelete(id).exec();
   }
-
-  async createSampleUsers() {
-    const sampleUsers = [
-      {
-        username: 'student1',
-        password: 'password123',
-        email: 'student1@example.com',
-        image: 'https://example.com/student1.jpg',
-        role: 'students',
-      },
-      {
-        username: 'admin1',
-        password: 'password123',
-        email: 'admin1@example.com',
-        image: 'https://example.com/admin1.jpg',
-        role: 'admin',
-      },
-      {
-        username: 'superadmin1',
-        password: 'password123',
-        email: 'superadmin1@example.com',
-        image: 'https://example.com/superadmin1.jpg',
-        role: 'superAdmin',
-      },
-      {
-        username: 'student2',
-        password: 'password123',
-        email: 'student2@example.com',
-        image: 'https://example.com/student2.jpg',
-        role: 'students',
-      },
-    ];
-
-    for (const userData of sampleUsers) {
-      try {
-        const createdUser = await this.createUser(userData);
-        console.log(`User ${userData.username} created successfully:`, createdUser);
-      } catch (error) {
-        console.error(`Error creating user ${userData.username}:`, error.message, error);
-      }
-    }
-  }
 }

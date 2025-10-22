@@ -11,7 +11,6 @@ import {
 import { UsersService } from './user.service';
 import { User } from './schemas/user.schema';
 import { UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 
@@ -29,13 +28,6 @@ export class UserController {
     }
 
     return this.userService.createUser(newUserData);
-  }
-
-  // Create sample users with different roles
-  @Post('seed')
-  async seedUsers() {
-    console.log('Seed endpoint called');
-    return this.userService.createSampleUsers();
   }
 
   // Get all users
