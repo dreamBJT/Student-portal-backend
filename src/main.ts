@@ -9,7 +9,7 @@ async function bootstrap() {
       'http://localhost:3001',
       'http://localhost:4200',
       'http://127.0.0.1:3000',
-      'https://injibara-portal.vercel.app/',
+      'https://injibara-portal.vercel.app',
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
