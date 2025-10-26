@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Delete,
+  Patch,
   Req,
 } from '@nestjs/common';
 import { VotesService } from './vote.service';
@@ -56,5 +57,9 @@ export class VotesController {
   @Delete(':id')
   deleteVote(@Param('id') id: string) {
     return this.votesService.deleteVote(id);
+  }
+  @Patch(':id')
+  updateVote(@Param('id') id: string, @Body('candidateId') candidateId: string) {
+    return this.votesService.updateVote(id, candidateId);
   }
 }

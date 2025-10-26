@@ -65,4 +65,13 @@ export class VotesService {
   async deleteVote(id: string): Promise<Vote | null> {
     return this.voteModel.findByIdAndDelete(id).exec();
   }
+  async updateVote(id: string, candidateId: string): Promise<Vote | null> {
+    return this.voteModel
+      .findByIdAndUpdate(
+        id,
+        { candidate: candidateId },
+        { new: true },
+      )
+      .exec();
+  }
 }

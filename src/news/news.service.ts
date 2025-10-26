@@ -47,4 +47,11 @@ export class NewsService {
     const result = await this.newsModel.findByIdAndDelete(id).exec();
     if (!result) throw new NotFoundException('News not found');
   }
+  async update(id: string, newsData: Partial<News>): Promise<News | null> {
+    const updatedNews = await this.newsModel
+      .findByIdAndUpdate(id, newsData, { new: true })
+      .exec();
+    if (!updatedNews) throw new NotFoundException('News not found');
+    return updatedNews;
+  }
 }

@@ -7,10 +7,14 @@ import {
   Put,
   Delete,
   Req,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { CandidatesService } from './candidates.service';
 import { Candidate } from './schemas/candidate.schema';
 import { Request } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { storage } from '../cloudinary/cloudinary.provider';
 
 // Type-safe request for roles
 interface AuthenticatedRequest extends Request {
@@ -25,10 +29,15 @@ export class CandidatesController {
   constructor(private readonly candidatesService: CandidatesService) {}
 
   @Post()
+  @UseInterceptors(FileInterceptor('image', { storage }))
   create(
     @Body() candidateData: Partial<Candidate>,
     @Req() req: AuthenticatedRequest,
+    @UploadedFile() file?: any,
   ) {
+    if (file) {
+      (candidateData as any).image = (file as any).path;
+    }
     const currentUserRole = req.user?.role ?? 'students';
     const creatorId = req.user?.id ?? '';
     return this.candidatesService.create(
@@ -60,4 +69,5 @@ export class CandidatesController {
   delete(@Param('id') id: string) {
     return this.candidatesService.delete(id);
   }
+  
 }
