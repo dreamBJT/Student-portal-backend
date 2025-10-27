@@ -44,6 +44,11 @@ export class NewsController {
   ) {
     return this.newsService.addComment(id, body.userId, body.comment);
   }
+  @Get(':id/comments')
+getComments(@Param('id') id: string) {
+  return this.newsService.getComments(id);
+}
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.newsService.delete(id);
