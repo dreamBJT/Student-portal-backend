@@ -43,6 +43,11 @@ export class NewsService {
       )
       .exec();
   }
+  async getComments(id: string) {
+  const news = await this.newsModel.findById(id).select('comments');
+  return news?.comments ?? [];
+}
+
   async delete(id: string): Promise<void> {
     const result = await this.newsModel.findByIdAndDelete(id).exec();
     if (!result) throw new NotFoundException('News not found');
