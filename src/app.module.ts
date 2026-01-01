@@ -9,6 +9,8 @@ import { VotesModule } from './vote/vote.module';
 import { LeadersModule } from './leaders/leaders.module';
 import { NewsModule } from './news/news.module';
 import { ElectionsModule } from './elections/elections.module';
+import { DatabaseModule } from './database/database.module';
+import { ActivityLogsModule } from './activity-logs/activity-logs.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { ElectionsModule } from './elections/elections.module';
     LeadersModule,
     NewsModule,
     ElectionsModule,
+    DatabaseModule,
+    ActivityLogsModule,
   ],
 })
 export class AppModule {}
